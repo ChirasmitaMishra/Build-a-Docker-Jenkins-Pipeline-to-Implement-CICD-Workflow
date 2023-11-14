@@ -1,9 +1,8 @@
 pipeline {
     agent any
 	
-	  tools
-    {
-       maven "Maven"
+	  environment {
+    DOCKERHUB_CREDENTIALS = credentials('chirasmita123')
     }
  stages {
       stage('checkout') {
@@ -34,7 +33,7 @@ pipeline {
   stage('Publish image to Docker Hub') {
           
             steps {
-        withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+        withDockerRegistry([ credentialsId: "chirasmita123", url: "" ]) {
           sh  'docker push chirasmita123/samplewebapp:latest'
         //  sh  'docker push chirasmita123/samplewebapp:$BUILD_NUMBER' 
         }
@@ -46,14 +45,14 @@ pipeline {
              
             steps 
 			{
-                sh "docker run -d -p 8003:8080 chirasmita123/samplewebapp"
+                sh "docker run -d -p 8003:8080 chirasmita123/samplewebapp:latest"
  
             }
         }
  stage('Run Docker container on remote hosts') {
              
             steps {
-                sh "docker -H ssh://ubuntu@18.234.195.234 run -d -p 8003:8080 chirasmita123/samplewebapp"
+                sh "docker -H ssh://ubuntu@18.234.195.234 run -d -p 8003:8080 chirasmita123/samplewebapp:latest"
  
             }
         }
