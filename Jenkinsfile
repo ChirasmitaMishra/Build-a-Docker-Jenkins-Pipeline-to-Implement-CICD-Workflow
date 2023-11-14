@@ -39,14 +39,14 @@ pipeline {
              
             steps 
 			{
-                sh "docker run -d -p 8003:8080 chirasmita123/samplewebapp:latest"
+                sh "docker run -d -p 8003:8080 chirasmita123/samplewebapp:$BUILD_NUMBER"
  
             }
         }
  stage('Run Docker container on remote hosts') {
              
             steps {
-                sh "docker -H ssh://ubuntu@18.234.195.234 run -d -p 8003:8080 chirasmita123/samplewebapp:latest"
+                sh "docker -H ssh://ubuntu@18.234.195.234 run -d -p 8003:8080 chirasmita123/samplewebapp:$BUILD_NUMBER"
  
             }
         }
