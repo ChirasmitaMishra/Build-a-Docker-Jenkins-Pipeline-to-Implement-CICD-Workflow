@@ -1,8 +1,8 @@
 FROM tomcat:latest
 
-LABEL maintainer="Nidhi Gupta"
+LABEL maintainer="Chirasmita Mishra"
 
-ADD ./target/LoginWebApp-1.war /usr/local/tomcat/webapps/
+ADD ./target/*.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
 
