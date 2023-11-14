@@ -20,27 +20,22 @@ pipeline {
         }
         
 
-  stage('Docker Build and Tag') {
-           steps {
-              
-                sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp chirasmita123/samplewebapp:latest'
-                //sh 'docker tag samplewebapp chirasmita123/samplewebapp:$BUILD_NUMBER'
-               
-          }
+ stage('Build docker image') {
+            steps {  
+                sh 'docker build -t chirasmita123/samplewebapp:$BUILD_NUMBER .'
+            }
         }
-     
-  stage('Publish image to Docker Hub') {
-          
-            steps {
-        withDockerRegistry([ credentialsId: "chirasmita123", url: "" ]) {
-          sh  'docker push chirasmita123/samplewebapp:latest'
-        //  sh  'docker push chirasmita123/samplewebapp:$BUILD_NUMBER' 
+        stage('login to dockerhub') {
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
         }
-                  
-          }
+        stage('push image') {
+            steps{
+                sh 'docker push chirasmita123/samplewebapp:$BUILD_NUMBER'
+            }
         }
-     
+             
       stage('Run Docker container on Jenkins Agent') {
              
             steps 
