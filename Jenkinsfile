@@ -43,13 +43,6 @@ pipeline {
  
             }
         }
- //stage('Run Docker container on remote hosts') {
-             
-           // steps {
-              //  sh "docker -H ssh://jenkins@54.92.216.59 run -d -p 8003:8080 chirasmita123/samplewebapp:$BUILD_NUMBER"
- 
-            //}
-       // }
-    }
-	}
+     }
+}
     
